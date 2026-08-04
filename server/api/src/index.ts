@@ -1,6 +1,14 @@
 import app from "./app";
 import { env } from "./config/env";
+import { connectDatabase } from "./database";
+import { logger } from "./logger";
 
-app.listen(env.API_PORT, () => {
-    console.log(`API Server is running on port ${env.API_PORT}`);
-});
+async function bootstrap() {
+  await connectDatabase();
+
+  app.listen(env.EXPRESS_PORT, () => {
+    logger.info(`Server running on port ${env.EXPRESS_PORT}`);
+  });
+}
+
+bootstrap();
