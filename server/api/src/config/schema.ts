@@ -19,4 +19,13 @@ export const envSchema = z.object({
 
   // Logging
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
+
+  //Default Admin
+  DEFAULT_ADMIN_EMAIL: z
+    .email()
+    .default("admin@example.com"),
+
+  DEFAULT_ADMIN_PASSWORD: z
+    .string()
+    .min(8),
 });

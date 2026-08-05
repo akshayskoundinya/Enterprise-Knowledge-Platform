@@ -18,10 +18,13 @@ function registerDatabaseEventListeners(): void {
   });
 
   mongoose.connection.on("error", (error) => {
-    logger.error({
-      module: "database",
-    },
-      "Failed to connect to MongoDB");
+    logger.error(
+      {
+        module: "database",
+        err: error,
+      },
+      "MongoDB connection error"
+    );
   });
 }
 
@@ -31,8 +34,13 @@ export async function connectDatabase(): Promise<void> {
   try {
     await mongoose.connect(env.MONGODB_URI);
   } catch (error) {
-    logger.error("Failed to connect to MongoDB");
-    logger.error(error);
+    logger.error(
+      {
+        module: "database",
+        err: error,
+      },
+      "Failed to connect to MongoDB"
+    );
 
     process.exit(1);
   }
