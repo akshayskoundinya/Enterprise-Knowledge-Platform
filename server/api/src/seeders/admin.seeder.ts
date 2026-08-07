@@ -2,7 +2,7 @@ import { env } from "../config/env";
 import { Roles, UserStatus } from "../constants";
 import { logger } from "../logger";
 import { RoleModel, UserModel } from "../models";
-import { hashPassword } from "../utils/password";
+import { hashPassword } from "../security/password";
 
 export async function seedAdmin(): Promise<void> {
     const adminRole = await RoleModel.findOne({

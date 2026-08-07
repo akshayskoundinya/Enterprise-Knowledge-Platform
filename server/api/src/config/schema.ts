@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { StringValue } from "ms";
 
 export const envSchema = z.object({
   // Environment
@@ -10,12 +11,28 @@ export const envSchema = z.object({
   // MongoDB
   MONGODB_URI: z.url(),
 
-  // JWT
-  JWT_SECRET: z.string().min(32, "JWT_SECRET must be at least 32 characters"),
+  // Authentication
+  ACCESS_TOKEN_SECRET: z
+    .string()
+    .min(32, "ACCESS_TOKEN_SECRET must be at least 32 characters"),
 
-  JWT_EXPIRES_IN: z.string(),
+  ACCESS_TOKEN_EXPIRES_IN: z.custom<StringValue>(
+    (value) => typeof value === "string",
+    {
+      message: "Invalid ACCESS_TOKEN_EXPIRES_IN",
+    }
+  ),
 
-  REFRESH_TOKEN_EXPIRES_IN: z.string(),
+  REFRESH_TOKEN_SECRET: z
+    .string()
+    .min(32, "REFRESH_TOKEN_SECRET must be at least 32 characters"),
+
+  REFRESH_TOKEN_EXPIRES_IN: z.custom<StringValue>(
+    (value) => typeof value === "string",
+    {
+      message: "Invalid REFRESH_TOKEN_EXPIRES_IN",
+    }
+  ),
 
   // Logging
   LOG_LEVEL: z.enum(["debug", "info", "warn", "error"]),
