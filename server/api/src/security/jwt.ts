@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
-import { env } from "../config";
-import { TokenPayload } from "./types";
+import ms from "ms";
 
+import { env } from "../config";
+import type { TokenPayload } from "./types";
 
 function generateAccessToken(userId: string): string {
     return jwt.sign(
@@ -41,9 +42,16 @@ function verifyRefreshToken(token: string): TokenPayload {
     ) as TokenPayload;
 }
 
+function getRefreshTokenExpiresAt(): Date {
+    const duration = ms(env.REFRESH_TOKEN_EXPIRES_IN);
+
+    return new Date(Date.now() + duration);
+}
+
 export const jwtUtils = {
     generateAccessToken,
     generateRefreshToken,
     verifyAccessToken,
     verifyRefreshToken,
+    getRefreshTokenExpiresAt,
 };
