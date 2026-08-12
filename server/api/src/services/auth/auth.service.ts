@@ -135,3 +135,13 @@ export async function refresh(
         refreshToken: newRefreshToken,
     };
 }
+
+export async function logoutAll(userId: string): Promise<void> {
+    await refreshTokenRepository.revokeAllForUser(userId);
+}
+
+export async function logout(refreshToken: string): Promise<void> {
+    const tokenHash = hashToken(refreshToken);
+
+    await refreshTokenRepository.revoke(tokenHash);
+}

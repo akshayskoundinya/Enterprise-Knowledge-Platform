@@ -24,3 +24,6 @@ export const Permissions = {
     // Admin
     ADMIN_DASHBOARD: "admin:dashboard",
 } as const;
+
+export type Permission =
+    (typeof Permissions)[keyof typeof Permissions];

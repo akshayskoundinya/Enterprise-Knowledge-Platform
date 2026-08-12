@@ -45,4 +45,8 @@ export const envSchema = z.object({
   DEFAULT_ADMIN_PASSWORD: z
     .string()
     .min(8),
+
+  //Default Employee
+  DEFAULT_EMPLOYEE_EMAIL: z.email(),
+  DEFAULT_EMPLOYEE_PASSWORD: z.string().min(8),
 });

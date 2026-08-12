@@ -39,21 +39,27 @@ async function revoke(tokenHash: string) {
             tokenHash,
         },
         {
-            revokedAt: new Date(),
+            $set: {
+                revokedAt: new Date(),
+            },
         }
     );
 }
 
 async function revokeAllForUser(userId: string) {
-    return RefreshTokenModel.updateMany(
+
+    await RefreshTokenModel.updateMany(
         {
             userId,
             revokedAt: null,
         },
         {
-            revokedAt: new Date(),
+            $set: {
+                revokedAt: new Date(),
+            },
         }
     );
+
 }
 
 export const refreshTokenRepository = {

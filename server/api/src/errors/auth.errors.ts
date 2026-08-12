@@ -23,3 +23,19 @@ export function invalidRefreshTokenError() {
         "INVALID_REFRESH_TOKEN"
     );
 }
+
+export function invalidAccessTokenError() {
+    return createAppError(
+        "Invalid access token",
+        401,
+        "INVALID_ACCESS_TOKEN"
+    );
+}
+
+export function insufficientPermissionsError() {
+    return createAppError(
+        "You do not have permission to perform this action",
+        403,
+        "INSUFFICIENT_PERMISSIONS"
+    );
+}

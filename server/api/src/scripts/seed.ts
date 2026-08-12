@@ -1,6 +1,6 @@
 import { connectDatabase } from "../database";
 import { logger } from "../logger";
-import { seedAdmin, seedRoles } from "../seeders";
+import { seedAdmin, seedRoles, seedEmployee } from "../seeders";
 
 async function main(): Promise<void> {
     try {
@@ -8,7 +8,7 @@ async function main(): Promise<void> {
 
         await seedRoles();
         await seedAdmin();
-
+        await seedEmployee();
         logger.info(
             {
                 module: "database",

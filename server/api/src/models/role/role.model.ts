@@ -1,6 +1,15 @@
 import { InferSchemaType, model, Schema } from "mongoose";
 
-const roleSchema = new Schema(
+import type { Permission } from "../../constants";
+import { Permissions } from "../../constants";
+
+interface RoleDocument {
+    name: string;
+    description: string;
+    permissions: Permission[];
+}
+
+const roleSchema = new Schema<RoleDocument>(
     {
         name: {
             type: String,
@@ -19,6 +28,7 @@ const roleSchema = new Schema(
         permissions: [
             {
                 type: String,
+                enum: Object.values(Permissions),
                 required: true,
             },
         ],
@@ -28,7 +38,6 @@ const roleSchema = new Schema(
     }
 );
 
-
 export type Role = InferSchemaType<typeof roleSchema>;
 
-export const RoleModel = model("Role", roleSchema);
+export const RoleModel = model<RoleDocument>("Role", roleSchema);
