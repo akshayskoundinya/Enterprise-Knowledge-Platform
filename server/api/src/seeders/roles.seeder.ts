@@ -7,6 +7,7 @@ const defaultRoles = [
         name: Roles.ADMIN,
         description: "System administrator",
         permissions: Object.values(Permissions),
+        isSystemRole: true,
     },
     {
         name: Roles.MANAGER,
@@ -18,6 +19,7 @@ const defaultRoles = [
             Permissions.CHAT_CREATE,
             Permissions.CHAT_READ,
         ],
+        isSystemRole: true,
     },
     {
         name: Roles.EMPLOYEE,
@@ -27,6 +29,7 @@ const defaultRoles = [
             Permissions.CHAT_CREATE,
             Permissions.CHAT_READ,
         ],
+        isSystemRole: true,
     },
 ];
 

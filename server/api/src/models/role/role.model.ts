@@ -3,10 +3,11 @@ import { InferSchemaType, model, Schema } from "mongoose";
 import type { Permission } from "../../constants";
 import { Permissions } from "../../constants";
 
-interface RoleDocument {
+export interface RoleDocument {
     name: string;
     description: string;
     permissions: Permission[];
+    isSystemRole: boolean;
 }
 
 const roleSchema = new Schema<RoleDocument>(
@@ -32,6 +33,11 @@ const roleSchema = new Schema<RoleDocument>(
                 required: true,
             },
         ],
+
+        isSystemRole: {
+            type: Boolean,
+            default: false,
+        },
     },
     {
         timestamps: true,
