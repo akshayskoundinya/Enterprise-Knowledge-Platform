@@ -14,6 +14,7 @@ export const Permissions = {
     // Document
     DOCUMENT_UPLOAD: "document:upload",
     DOCUMENT_READ: "document:read",
+    DOCUMENT_READ_ALL: "document:read:all",
     DOCUMENT_UPDATE: "document:update",
     DOCUMENT_DELETE: "document:delete",
 

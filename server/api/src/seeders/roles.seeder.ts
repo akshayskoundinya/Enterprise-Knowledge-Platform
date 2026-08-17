@@ -14,12 +14,12 @@ const defaultRoles = [
         description: "Manager",
         permissions: [
             Permissions.DOCUMENT_READ,
+            Permissions.DOCUMENT_READ_ALL,
             Permissions.DOCUMENT_UPLOAD,
             Permissions.USER_READ,
             Permissions.CHAT_CREATE,
             Permissions.CHAT_READ,
         ],
-        isSystemRole: true,
     },
     {
         name: Roles.EMPLOYEE,
