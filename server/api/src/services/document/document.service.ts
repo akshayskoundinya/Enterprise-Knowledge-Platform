@@ -3,9 +3,11 @@ import { documentRepository, roleRepository } from "../../repositories";
 import { localStorage } from "../../storage";
 import { validateFileSignature } from "../../security/file-signature";
 import { Permissions } from "../../constants";
+import { processDocument } from "../../clients";
 import {
     canAccessDocument,
 } from "./document-access.service";
+
 
 interface CreateDocumentInput {
     name: string;
@@ -79,6 +81,30 @@ export async function uploadDocument(
                 storageKey: storedFile.storageKey,
                 uploadedBy: input.uploadedBy,
             });
+
+        try {
+            await processDocument({
+                documentId: document._id.toString(),
+                storageKey: document.storageKey,
+                mimeType: document.mimeType,
+                allowedUserIds: [
+                    input.uploadedBy,
+                ],
+            });
+
+            const processingDocument =
+                await documentRepository.updateStatus(
+                    document._id.toString(),
+                    "PROCESSING"
+                );
+
+            return processingDocument ?? document;
+        } catch (error) {
+            console.error(
+                "Failed to start AI document processing:",
+                error
+            );
+        }
 
         return document;
     } catch (error) {

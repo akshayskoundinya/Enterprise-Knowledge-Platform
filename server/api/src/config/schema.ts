@@ -8,6 +8,13 @@ export const envSchema = z.object({
   // Express
   EXPRESS_PORT: z.coerce.number().int().positive(),
 
+  // AI Service
+  AI_SERVICE_URL: z.url(),
+
+  AI_INTERNAL_API_KEY: z
+    .string()
+    .min(32, "AI_INTERNAL_API_KEY must be at least 32 characters"),
+
   // MongoDB
   MONGODB_URI: z.url(),
 
