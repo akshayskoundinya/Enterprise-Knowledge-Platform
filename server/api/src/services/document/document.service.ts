@@ -314,3 +314,29 @@ export async function updateDocument(
 
     return updatedDocument;
 }
+
+export async function getInternalDocumentContent(
+    documentId: string
+) {
+    const document =
+        await documentRepository.findById(
+            documentId
+        );
+
+    if (!document) {
+        throw createAppError(
+            "Document not found",
+            404,
+            "DOCUMENT_NOT_FOUND"
+        );
+    }
+
+    const file = await localStorage.get(
+        document.storageKey
+    );
+
+    return {
+        document,
+        file,
+    };
+}

@@ -1,5 +1,2 @@
 export * from "./document.service";
-
-export {
-    canAccessDocument,
-} from "./document-access.service";
+export * from "./document-access.service";

@@ -11,8 +11,9 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # Express → AI service
+    # Internal service communication
     internal_api_key: str
+    express_service_url: str = "http://localhost:3000"
 
     gemini_api_key: str | None = None
     qdrant_url: str = "http://qdrant:6333"
