@@ -11,13 +11,20 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
 
-    # Internal service communication
     internal_api_key: str
-    express_service_url: str = "http://localhost:3000"
+    express_service_url: str = (
+        "http://localhost:3000"
+    )
 
     gemini_api_key: str | None = None
+
+    embedding_model: str = (
+        "gemini-embedding-001"
+    )
+
     qdrant_url: str = "http://qdrant:6333"
     qdrant_api_key: str | None = None
+    qdrant_collection_name: str = "document_chunks"
 
     model_config = SettingsConfigDict(
         env_file=".env",

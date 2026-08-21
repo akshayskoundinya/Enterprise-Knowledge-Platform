@@ -1,12 +1,14 @@
-from fastapi import APIRouter, Depends 
+from fastapi import APIRouter, Depends
 
-from src.api.dependencies import verify_internal_api_key
+from src.api.dependencies import (
+    verify_internal_api_key,
+)
 from src.api.schemas.document import (
     ProcessDocumentRequest,
     ProcessDocumentResponse,
 )
-from src.clients.express_client import (
-    get_document_content,
+from src.services.document_ingestion import (
+    ingest_document,
 )
 
 router = APIRouter(
@@ -18,20 +20,20 @@ router = APIRouter(
 @router.post(
     "/process",
     response_model=ProcessDocumentResponse,
-    dependencies=[Depends(verify_internal_api_key)],
+    dependencies=[
+        Depends(verify_internal_api_key)
+    ],
 )
 async def process_document(
     request: ProcessDocumentRequest,
 ) -> ProcessDocumentResponse:
 
-    document_content = await get_document_content(
+    chunks = await ingest_document(
         request.document_id
     )
 
     print(
-        f"Retrieved document "
-        f"{request.document_id}: "
-        f"{len(document_content)} bytes"
+        f"Created {len(chunks)} chunks"
     )
 
     return ProcessDocumentResponse(
