@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     embedding_model: str = (
         "gemini-embedding-001"
     )
+    generation_model: str = (
+    "gemini-3.6-flash"
+)
 
     qdrant_url: str = "http://qdrant:6333"
     qdrant_api_key: str | None = None

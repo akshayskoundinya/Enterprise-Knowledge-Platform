@@ -6,6 +6,7 @@ import userRoutes from "./user.routes";
 import roleRoutes from "./role.routes";
 import documentRoutes from "./document.routes";
 import internalDocumentRoutes from "./internal-document.routes";
+import retrievalRoutes from "./retrieval.routes";
 
 const router = Router();
 
@@ -18,4 +19,5 @@ router.use(
     "/internal/v1/documents",
     internalDocumentRoutes
 );
+router.use("/retrieval", retrievalRoutes);
 export default router;

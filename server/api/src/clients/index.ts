@@ -1,1 +1,4 @@
-export { processDocument } from "./ai.client";
+export {
+    processDocument,
+    searchDocuments,
+} from "./ai.client";
