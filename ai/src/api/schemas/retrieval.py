@@ -26,6 +26,9 @@ class RetrievedChunk(BaseModel):
     page: int | None
     text: str
     score: float
+    source: str
+    rrf_score: float
+    rerank_score: float
 
 
 class RetrievalSearchResponse(BaseModel):

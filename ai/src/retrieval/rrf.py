@@ -1,27 +1,22 @@
 from collections import defaultdict
 
-from qdrant_client import models
+from src.retrieval.models import RetrievalResult
 
 
 def reciprocal_rank_fusion(
-    result_lists: list[list[models.ScoredPoint]],
+    result_lists: list[list[RetrievalResult]],
     top_k: int,
     k: int = 60,
-) -> list[models.ScoredPoint]:
+) -> list[RetrievalResult]:
     scores: dict[str, float] = defaultdict(float)
-    documents: dict[str, models.ScoredPoint] = {}
+    documents: dict[str, RetrievalResult] = {}
 
     for result_list in result_lists:
         for rank, result in enumerate(
             result_list,
             start=1,
         ):
-            payload = result.payload or {}
-
-            chunk_id = payload.get("chunk_id")
-
-            if not chunk_id:
-                continue
+            chunk_id = result.chunk_id
 
             scores[chunk_id] += 1 / (
                 k + rank
@@ -36,6 +31,15 @@ def reciprocal_rank_fusion(
     )
 
     return [
-        documents[chunk_id]
+        RetrievalResult(
+            chunk_id=documents[chunk_id].chunk_id,
+            document_id=documents[chunk_id].document_id,
+            page=documents[chunk_id].page,
+            text=documents[chunk_id].text,
+            score=documents[chunk_id].score,
+            source=documents[chunk_id].source,
+            rrf_score=scores[chunk_id],
+            rerank_score=documents[chunk_id].rerank_score,
+        )
         for chunk_id in ranked_chunk_ids[:top_k]
     ]

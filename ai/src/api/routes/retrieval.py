@@ -29,7 +29,7 @@ async def search(
     request: RetrievalSearchRequest,
 ) -> RetrievalSearchResponse:
 
-    points = await retrieve_documents(
+    results = await retrieve_documents(
         query=request.query,
         allowed_document_ids=(
             request.allowed_document_ids
@@ -37,27 +37,18 @@ async def search(
         top_k=request.top_k,
     )
 
-    results = []
-
-    for point in points:
-        payload = point.payload or {}
-
-        results.append(
-            RetrievedChunk(
-                chunk_id=str(
-                    payload["chunk_id"]
-                ),
-                document_id=str(
-                    payload["document_id"]
-                ),
-                page=payload.get("page"),
-                text=str(
-                    payload["text"]
-                ),
-                score=point.score,
-            )
-        )
-
     return RetrievalSearchResponse(
-        results=results
+        results=[
+            RetrievedChunk(
+                chunk_id=result.chunk_id,
+                document_id=result.document_id,
+                page=result.page,
+                text=result.text,
+                score=result.score,
+                source=result.source,
+                rrf_score=result.rrf_score,
+                rerank_score=result.rerank_score,
+            )
+            for result in results
+        ]
     )

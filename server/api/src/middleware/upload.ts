@@ -21,6 +21,8 @@ const upload = multer({
     },
 
     fileFilter: (_req, file, callback) => {
+        console.log("Uploaded MIME type:", file.mimetype);
+        console.log("Original filename:", file.originalname);
         if (
             !ALLOWED_DOCUMENT_MIME_TYPES.includes(
                 file.mimetype as typeof ALLOWED_DOCUMENT_MIME_TYPES[number]

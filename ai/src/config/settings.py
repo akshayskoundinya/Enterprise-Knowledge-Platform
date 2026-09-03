@@ -23,7 +23,10 @@ class Settings(BaseSettings):
     )
     generation_model: str = (
     "gemini-3.6-flash"
-)
+    )
+    reranker_model: str = (
+        "BAAI/bge-reranker-v2-m3"
+    )
 
     qdrant_url: str = "http://qdrant:6333"
     qdrant_api_key: str | None = None

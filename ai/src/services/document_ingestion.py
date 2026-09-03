@@ -18,6 +18,7 @@ from src.vectorstore.collection import (
 from src.vectorstore.repository import (
     upsert_chunks,
 )
+from src.retrieval.bm25 import bm25_index
 
 
 async def ingest_document(
@@ -53,11 +54,13 @@ async def ingest_document(
         vectors,
     )
 
+    bm25_index.add_chunks(chunks)
+
     print(
         f"Document {document_id}: "
         f"{len(chunks)} chunks → "
         f"{len(vectors)} vectors → "
-        f"Qdrant"
+        f"Qdrant + BM25"
     )
 
     return chunks
