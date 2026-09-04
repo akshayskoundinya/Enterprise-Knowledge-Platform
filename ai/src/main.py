@@ -5,6 +5,9 @@ from src.config.settings import get_settings
 from src.api.routes.retrieval import (
     router as retrieval_router,
 )
+from src.api.routes.generation import (
+    router as generation_router,
+)
 
 
 settings = get_settings()
@@ -16,6 +19,8 @@ app = FastAPI(
 
 app.include_router(documents_router)
 app.include_router(retrieval_router)
+app.include_router(generation_router)
+
 
 @app.get("/health")
 async def health():
