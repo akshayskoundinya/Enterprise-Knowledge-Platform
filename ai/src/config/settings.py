@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     "gemini-3.6-flash"
     )
     reranker_model: str = (
-        "BAAI/bge-reranker-v2-m3"
+        "cross-encoder/ms-marco-MiniLM-L2-v2"
     )
 
     qdrant_url: str = "http://qdrant:6333"

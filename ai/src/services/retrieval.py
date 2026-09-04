@@ -13,7 +13,7 @@ from src.retrieval.multi_query import (
 from src.retrieval.rrf import (
     reciprocal_rank_fusion,
 )
-from src.reranking.bge import (
+from src.reranking.cross_encoder import (
     rerank_documents,
 )
 from src.vectorstore.search import (
