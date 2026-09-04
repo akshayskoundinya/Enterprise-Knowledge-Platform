@@ -3,6 +3,9 @@ from src.generation.gemini import get_generation_model
 from src.generation.parser import extract_text
 from src.services.retrieval import retrieve_documents
 from src.graph.state import RAGState
+from src.guardrails.query_groundedness import (
+    QueryGroundedness,
+)
 
 
 async def retrieve_node(
@@ -67,4 +70,32 @@ User question:
 
     return {
         "answer": extract_text(response.content),
+    }
+
+def validate_output_node(
+    state: RAGState,
+) -> dict:
+    validator = QueryGroundedness()
+
+    context = build_context(
+        state["retrieved_documents"]
+    )
+
+    result = validator.validate(
+        state["answer"],
+        {
+            "context": context,
+        },
+    )
+
+    if result.outcome.value == "fail":
+        return {
+            "answer": (
+                "I could not produce a sufficiently "
+                "grounded answer from the provided documents."
+            )
+        }
+
+    return {
+        "answer": state["answer"],
     }
