@@ -8,9 +8,12 @@ from src.api.routes.retrieval import (
 from src.api.routes.generation import (
     router as generation_router,
 )
+from src.config.langsmith import configure_langsmith
 
+configure_langsmith()
 
 settings = get_settings()
+
 
 app = FastAPI(
     title=settings.app_name,

@@ -18,6 +18,15 @@ class Settings(BaseSettings):
 
     gemini_api_key: str | None = None
 
+    langsmith_tracing: bool = False
+    langsmith_api_key: str | None = None
+    langsmith_endpoint: str = (
+        "https://aws.api.smith.langchain.com"
+    )
+    langsmith_project: str = (
+        "enterprise-knowledge-platform"
+    )
+
     embedding_model: str = (
         "gemini-embedding-001"
     )
