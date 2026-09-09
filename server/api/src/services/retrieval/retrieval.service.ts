@@ -1,4 +1,7 @@
-import { searchDocuments } from "../../clients";
+import {
+    generateAnswer,
+    searchDocuments,
+} from "../../clients";
 import {
     getAccessibleDocuments,
 } from "../document/document.service";
@@ -26,6 +29,29 @@ export async function search(
         );
 
     return searchDocuments({
+        query: input.query,
+        userId: input.userId,
+        allowedDocumentIds,
+        topK: input.topK,
+    });
+}
+
+export async function generate(
+    input: SearchInput
+) {
+    const accessibleDocuments =
+        await getAccessibleDocuments(
+            input.userId,
+            input.roleId
+        );
+
+    const allowedDocumentIds =
+        accessibleDocuments.map(
+            (document) =>
+                document._id.toString()
+        );
+
+    return generateAnswer({
         query: input.query,
         userId: input.userId,
         allowedDocumentIds,

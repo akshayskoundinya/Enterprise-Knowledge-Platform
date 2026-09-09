@@ -6,6 +6,7 @@ from src.graph.state import RAGState
 from src.guardrails.query_groundedness import (
     QueryGroundedness,
 )
+from src.core.exceptions import GenerationError
 
 
 async def retrieve_node(
@@ -66,11 +67,14 @@ User question:
 {state["query"]}
 """
 
-    response = await model.ainvoke(prompt)
+    try:
+        response = await model.ainvoke(prompt)
+    except Exception as exc:
+        raise GenerationError(
+            "Answer generation failed"
+        ) from exc
 
-    return {
-        "answer": extract_text(response.content),
-    }
+    return {"answer": extract_text(response.content)}
 
 def validate_output_node(
     state: RAGState,

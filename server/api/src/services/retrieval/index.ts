@@ -1,1 +1,1 @@
-export { search } from "./retrieval.service";
+export * from "./retrieval.service";

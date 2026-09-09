@@ -2,6 +2,7 @@ import { Router } from "express";
 
 import { Permissions } from "../constants";
 import {
+    generateAnswerController,
     searchDocumentsController,
 } from "../controllers";
 import {
@@ -21,6 +22,14 @@ router.post(
     authorize(Permissions.DOCUMENT_READ),
     validate(retrievalSearchSchema),
     searchDocumentsController
+);
+
+router.post(
+    "/answer",
+    authenticate,
+    authorize(Permissions.DOCUMENT_READ),
+    validate(retrievalSearchSchema),
+    generateAnswerController
 );
 
 export default router;

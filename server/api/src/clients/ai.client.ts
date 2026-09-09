@@ -30,6 +30,23 @@ interface RetrievedChunk {
 interface SearchDocumentsResponse {
     results: RetrievedChunk[];
 }
+interface GenerateAnswerRequest {
+    query: string;
+    userId: string;
+    allowedDocumentIds: string[];
+    topK: number;
+}
+
+interface SourceReference {
+    chunk_id: string;
+    document_id: string;
+    page: number | null;
+}
+
+interface GenerateAnswerResponse {
+    answer: string;
+    sources: SourceReference[];
+}
 
 export async function processDocument(
     input: ProcessDocumentRequest
@@ -86,4 +103,34 @@ export async function searchDocuments(
     }
 
     return response.json() as Promise<SearchDocumentsResponse>;
+}
+
+export async function generateAnswer(
+    input: GenerateAnswerRequest
+): Promise<GenerateAnswerResponse> {
+    const response = await fetch(
+        `${env.AI_SERVICE_URL}/internal/v1/generation/answer`,
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Internal-API-Key": env.AI_INTERNAL_API_KEY,
+            },
+            body: JSON.stringify({
+                query: input.query,
+                user_id: input.userId,
+                allowed_document_ids:
+                    input.allowedDocumentIds,
+                top_k: input.topK,
+            }),
+        }
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            `AI service returned HTTP ${response.status}`
+        );
+    }
+
+    return response.json() as Promise<GenerateAnswerResponse>;
 }
