@@ -5,7 +5,11 @@ import {
     DocumentUpload,
 } from "@/components/documents";
 
-import { getDocuments } from "@/features/documents/document.api";
+import {
+    deleteDocument,
+    downloadDocument,
+    getDocuments,
+} from "@/features/documents/document.api";
 import type { Document } from "@/features/documents/document.types";
 
 function DocumentsPage() {
@@ -25,6 +29,60 @@ function DocumentsPage() {
             document,
             ...currentDocuments,
         ]);
+    }
+
+    async function handleDownload(
+        document: Document,
+    ) {
+        try {
+            const file =
+                await downloadDocument(document.id);
+
+            const url =
+                URL.createObjectURL(file);
+
+            const link =
+                window.document.createElement("a");
+
+            link.href = url;
+            link.download = document.originalName;
+
+            link.click();
+
+            URL.revokeObjectURL(url);
+        } catch {
+            setError(
+                "Unable to download document.",
+            );
+        }
+    }
+
+    async function handleDelete(
+        document: Document,
+    ) {
+        const confirmed = window.confirm(
+            `Are you sure you want to delete "${document.originalName}"?`,
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+            await deleteDocument(document.id);
+
+            setDocuments((currentDocuments) =>
+                currentDocuments.filter(
+                    (currentDocument) =>
+                        currentDocument.id !==
+                        document.id,
+                ),
+            );
+        } catch {
+            setError(
+                "Unable to delete document.",
+            );
+        }
     }
 
     useEffect(() => {
@@ -76,6 +134,8 @@ function DocumentsPage() {
             ) : (
                 <DocumentTable
                     documents={documents}
+                    onDownload={handleDownload}
+                    onDelete={handleDelete}
                 />
             )}
         </main>

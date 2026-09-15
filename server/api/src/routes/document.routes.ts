@@ -8,6 +8,7 @@ import {
     getDocumentController,
     downloadDocumentController,
     updateDocumentController,
+    deleteDocumentController,
 } from "../controllers";
 
 import {
@@ -29,14 +30,14 @@ router.post(
     authenticate,
     authorize(Permissions.DOCUMENT_UPLOAD),
     uploadSingleDocument,
-    uploadDocumentController
+    uploadDocumentController,
 );
 
 router.get(
     "/",
     authenticate,
     authorize(Permissions.DOCUMENT_READ),
-    getDocumentsController
+    getDocumentsController,
 );
 
 router.patch(
@@ -45,15 +46,15 @@ router.patch(
     authorize(Permissions.DOCUMENT_UPDATE),
     validate(documentIdSchema, "params"),
     validate(updateDocumentSchema),
-    updateDocumentController
+    updateDocumentController,
 );
 
-router.get(
+router.delete(
     "/:id",
     authenticate,
-    authorize(Permissions.DOCUMENT_READ),
+    authorize(Permissions.DOCUMENT_DELETE),
     validate(documentIdSchema, "params"),
-    getDocumentController
+    deleteDocumentController,
 );
 
 router.get(
@@ -61,7 +62,15 @@ router.get(
     authenticate,
     authorize(Permissions.DOCUMENT_READ),
     validate(documentIdSchema, "params"),
-    downloadDocumentController
+    downloadDocumentController,
+);
+
+router.get(
+    "/:id",
+    authenticate,
+    authorize(Permissions.DOCUMENT_READ),
+    validate(documentIdSchema, "params"),
+    getDocumentController,
 );
 
 
