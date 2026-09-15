@@ -1,3 +1,166 @@
-#root {
+.app-layout {
+    display: flex;
     min-height: 100vh;
+}
+
+.app-sidebar {
+    width: 240px;
+    min-width: 240px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.app-sidebar__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.app-sidebar__brand {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.app-sidebar__brand h2 {
+    margin: 0;
+}
+
+.app-sidebar__brand span {
+    font-size: 12px;
+    line-height: 1.4;
+    color: #6b7280;
+}
+
+.app-sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 32px;
+}
+
+.app-sidebar__nav a {
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #374151;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+}
+
+.app-sidebar__nav a:hover {
+    background: #f9fafb;
+}
+
+.app-sidebar__nav a.active {
+    background: #f3f4f6;
+    font-weight: 600;
+}
+
+.logout-button {
+    margin-top: auto;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+.sidebar-close-button {
+    display: none;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.app-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    height: 64px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.app-header__title {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.menu-button {
+    display: none;
+    margin-right: 12px;
+    border: 0;
+    padding: 4px;
+    background: transparent;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.app-content {
+    flex: 1;
+    padding: 32px;
+}
+
+.sidebar-overlay {
+    display: none;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1001;
+
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .app-sidebar--open {
+        transform: translateX(0);
+    }
+
+    .sidebar-close-button {
+        display: block;
+    }
+
+    .sidebar-overlay {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+
+        border: 0;
+        padding: 0;
+        background: rgba(0, 0, 0, 0.25);
+        cursor: pointer;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .app-header {
+        padding: 0 16px;
+    }
+
+    .app-content {
+        padding: 24px 16px;
+    }
 }
