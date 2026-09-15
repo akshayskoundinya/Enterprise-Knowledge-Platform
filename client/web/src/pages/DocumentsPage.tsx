@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { getDocuments } from "@/features/documents/document.api";
 import type { Document } from "@/features/documents/document.types";
+import { DocumentTable } from "@/components/documents";
 
 function DocumentsPage() {
     const [documents, setDocuments] = useState<Document[]>(
@@ -58,21 +59,9 @@ function DocumentsPage() {
             {documents.length === 0 ? (
                 <p>No documents available.</p>
             ) : (
-                <ul>
-                    {documents.map((document) => (
-                        <li key={document.id}>
-                            <strong>
-                                {document.name}
-                            </strong>
-
-                            {" — "}
-
-                            <span>
-                                {document.status}
-                            </span>
-                        </li>
-                    ))}
-                </ul>
+                <DocumentTable
+                    documents={documents}
+                />
             )}
         </main>
     );
