@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 
+import {
+    DocumentTable,
+    DocumentUpload,
+} from "@/components/documents";
+
 import { getDocuments } from "@/features/documents/document.api";
 import type { Document } from "@/features/documents/document.types";
-import { DocumentTable } from "@/components/documents";
 
 function DocumentsPage() {
     const [documents, setDocuments] = useState<Document[]>(
@@ -15,6 +19,13 @@ function DocumentsPage() {
     const [error, setError] = useState<string | null>(
         null,
     );
+
+    function handleUploaded(document: Document) {
+        setDocuments((currentDocuments) => [
+            document,
+            ...currentDocuments,
+        ]);
+    }
 
     useEffect(() => {
         async function loadDocuments() {
@@ -55,6 +66,10 @@ function DocumentsPage() {
                     Manage your knowledge documents.
                 </p>
             </header>
+
+            <DocumentUpload
+                onUploaded={handleUploaded}
+            />
 
             {documents.length === 0 ? (
                 <p>No documents available.</p>

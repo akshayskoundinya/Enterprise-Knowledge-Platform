@@ -7,9 +7,6 @@ import {
 
 export const apiClient = axios.create({
     baseURL: "/",
-    headers: {
-        "Content-Type": "application/json",
-    },
 });
 
 apiClient.interceptors.request.use((config) => {
