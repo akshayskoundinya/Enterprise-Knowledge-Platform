@@ -24,6 +24,15 @@ function DocumentsPage() {
         null,
     );
 
+    const [downloadingDocumentId, setDownloadingDocumentId] =
+        useState<string | null>(null);
+
+    const [deletingDocumentId, setDeletingDocumentId] =
+        useState<string | null>(null);
+
+    const [actionError, setActionError] =
+        useState<string | null>(null);
+
     function handleUploaded(document: Document) {
         setDocuments((currentDocuments) => [
             document,
@@ -34,6 +43,9 @@ function DocumentsPage() {
     async function handleDownload(
         document: Document,
     ) {
+        setActionError(null);
+        setDownloadingDocumentId(document.id);
+
         try {
             const file =
                 await downloadDocument(document.id);
@@ -51,9 +63,11 @@ function DocumentsPage() {
 
             URL.revokeObjectURL(url);
         } catch {
-            setError(
-                "Unable to download document.",
+            setActionError(
+                `Unable to download "${document.originalName}".`,
             );
+        } finally {
+            setDownloadingDocumentId(null);
         }
     }
 
@@ -68,6 +82,9 @@ function DocumentsPage() {
             return;
         }
 
+        setActionError(null);
+        setDeletingDocumentId(document.id);
+
         try {
             await deleteDocument(document.id);
 
@@ -79,9 +96,11 @@ function DocumentsPage() {
                 ),
             );
         } catch {
-            setError(
-                "Unable to delete document.",
+            setActionError(
+                `Unable to delete "${document.originalName}".`,
             );
+        } finally {
+            setDeletingDocumentId(null);
         }
     }
 
@@ -129,6 +148,12 @@ function DocumentsPage() {
                 onUploaded={handleUploaded}
             />
 
+            {actionError && (
+                <p role="alert">
+                    {actionError}
+                </p>
+            )}
+
             {documents.length === 0 ? (
                 <p>No documents available.</p>
             ) : (
@@ -136,6 +161,12 @@ function DocumentsPage() {
                     documents={documents}
                     onDownload={handleDownload}
                     onDelete={handleDelete}
+                    downloadingDocumentId={
+                        downloadingDocumentId
+                    }
+                    deletingDocumentId={
+                        deletingDocumentId
+                    }
                 />
             )}
         </main>

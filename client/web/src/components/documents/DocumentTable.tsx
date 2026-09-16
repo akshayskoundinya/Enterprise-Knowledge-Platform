@@ -4,12 +4,16 @@ interface DocumentTableProps {
     documents: Document[];
     onDownload: (document: Document) => void;
     onDelete: (document: Document) => void;
+    downloadingDocumentId: string | null;
+    deletingDocumentId: string | null;
 }
 
 function DocumentTable({
     documents,
     onDownload,
     onDelete,
+    downloadingDocumentId,
+    deletingDocumentId,
 }: DocumentTableProps) {
     return (
         <div className="document-table-container">
@@ -62,23 +66,37 @@ function DocumentTable({
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        onDownload(
-                                            document,
-                                        )
+                                        onDownload(document)
+                                    }
+                                    disabled={
+                                        downloadingDocumentId ===
+                                        document.id ||
+                                        deletingDocumentId ===
+                                        document.id
                                     }
                                 >
-                                    Download
+                                    {downloadingDocumentId ===
+                                        document.id
+                                        ? "Downloading..."
+                                        : "Download"}
                                 </button>
 
                                 <button
                                     type="button"
                                     onClick={() =>
-                                        onDelete(
-                                            document,
-                                        )
+                                        onDelete(document)
+                                    }
+                                    disabled={
+                                        downloadingDocumentId ===
+                                        document.id ||
+                                        deletingDocumentId ===
+                                        document.id
                                     }
                                 >
-                                    Delete
+                                    {deletingDocumentId ===
+                                        document.id
+                                        ? "Deleting..."
+                                        : "Delete"}
                                 </button>
                             </td>
                         </tr>
