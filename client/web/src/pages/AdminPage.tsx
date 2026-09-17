@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import type { SubmitEvent } from "react";
 
+import "./AdminPage.css";
+
 import {
     createRole,
     createUser,

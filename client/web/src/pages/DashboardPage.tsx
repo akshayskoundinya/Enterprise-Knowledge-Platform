@@ -9,17 +9,12 @@ import { getDocuments } from "@/features/documents/document.api";
 import { getDocumentMetrics } from "@/features/documents/document.utils";
 import type { Document } from "@/features/documents/document.types";
 
+import "./DashboardPage.css";
+
 function DashboardPage() {
-    const [documents, setDocuments] = useState<Document[]>(
-        [],
-    );
-
-    const [isLoading, setIsLoading] =
-        useState(true);
-
-    const [error, setError] = useState<string | null>(
-        null,
-    );
+    const [documents, setDocuments] = useState<Document[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         async function loadDocuments() {
@@ -28,9 +23,7 @@ function DashboardPage() {
 
                 setDocuments(result);
             } catch {
-                setError(
-                    "Unable to load dashboard data.",
-                );
+                setError("Unable to load dashboard data.");
             } finally {
                 setIsLoading(false);
             }
@@ -40,31 +33,46 @@ function DashboardPage() {
     }, []);
 
     if (isLoading) {
-        return <h1>Loading dashboard...</h1>;
+        return (
+            <main className="page dashboard-page">
+                <header className="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Your knowledge platform overview.</p>
+                </header>
+
+                <div className="dashboard-state">
+                    <p>Loading dashboard...</p>
+                </div>
+            </main>
+        );
     }
 
     if (error) {
         return (
-            <div>
-                <h1>Dashboard</h1>
-                <p>{error}</p>
-            </div>
+            <main className="page dashboard-page">
+                <header className="page-header">
+                    <h1>Dashboard</h1>
+                    <p>Your knowledge platform overview.</p>
+                </header>
+
+                <div className="dashboard-state dashboard-state--error">
+                    <h2>Unable to load dashboard</h2>
+                    <p>{error}</p>
+                </div>
+            </main>
         );
     }
 
     const metrics = getDocumentMetrics(documents);
 
     return (
-        <main>
-            <header>
+        <main className="page dashboard-page">
+            <header className="page-header">
                 <h1>Dashboard</h1>
-
-                <p>
-                    Your knowledge platform overview.
-                </p>
+                <p>Your knowledge platform overview.</p>
             </header>
 
-            <section>
+            <section className="dashboard-stats">
                 <DashboardStatCard
                     label="Total Documents"
                     value={metrics.total}
@@ -79,11 +87,16 @@ function DashboardPage() {
                     label="Processing"
                     value={metrics.processing}
                 />
+
+                <DashboardStatCard
+                    label="Failed"
+                    value={metrics.failed}
+                />
             </section>
 
-            <RecentDocuments
-                documents={documents}
-            />
+            <section className="dashboard-section">
+                <RecentDocuments documents={documents} />
+            </section>
         </main>
     );
 }

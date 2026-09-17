@@ -103,10 +103,6 @@ export async function refresh(
         throw inactiveAccountError();
     }
 
-    /*
-     * Revoke the old refresh token before issuing
-     * the replacement token.
-     */
     await refreshTokenRepository.revoke(tokenHash);
 
     const userId = user._id.toString();

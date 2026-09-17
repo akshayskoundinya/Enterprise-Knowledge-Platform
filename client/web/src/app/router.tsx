@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import App from "./App";
+import HomePage from "@/pages/HomePage";
 import AppLayout from "@/components/layout/AppLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -15,7 +15,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: <HomePage />,
     },
     {
         path: "/login",

@@ -8,10 +8,15 @@ function DashboardStatCard({
     value,
 }: DashboardStatCardProps) {
     return (
-        <div>
-            <p>{label}</p>
-            <strong>{value}</strong>
-        </div>
+        <article className="dashboard-stat-card">
+            <p className="dashboard-stat-card__label">
+                {label}
+            </p>
+
+            <strong className="dashboard-stat-card__value">
+                {value}
+            </strong>
+        </article>
     );
 }
 

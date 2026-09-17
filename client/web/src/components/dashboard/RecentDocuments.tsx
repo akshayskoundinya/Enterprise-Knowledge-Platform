@@ -7,34 +7,41 @@ interface RecentDocumentsProps {
 function RecentDocuments({
     documents,
 }: RecentDocumentsProps) {
-    if (documents.length === 0) {
-        return (
-            <section>
-                <h2>Recent Documents</h2>
-                <p>No documents available.</p>
-            </section>
-        );
-    }
+    const recentDocuments = documents.slice(0, 5);
 
     return (
-        <section>
-            <h2>Recent Documents</h2>
+        <section className="recent-documents card">
+            <header className="recent-documents__header">
+                <h2>Recent Documents</h2>
+                <p>Your latest uploaded documents.</p>
+            </header>
 
-            <ul>
-                {documents.slice(0, 5).map((document) => (
-                    <li key={document.id}>
-                        <strong>
-                            {document.name}
-                        </strong>
+            {recentDocuments.length === 0 ? (
+                <div className="recent-documents__empty">
+                    <p>No documents available.</p>
+                </div>
+            ) : (
+                <ul className="recent-documents__list">
+                    {recentDocuments.map((document) => (
+                        <li
+                            key={document.id}
+                            className="recent-documents__item"
+                        >
+                            <div className="recent-documents__info">
+                                <strong>
+                                    {document.name}
+                                </strong>
+                            </div>
 
-                        {" — "}
-
-                        <span>
-                            {document.status}
-                        </span>
-                    </li>
-                ))}
-            </ul>
+                            <span
+                                className={`status-badge status-badge--${document.status.toLowerCase()}`}
+                            >
+                                {document.status}
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            )}
         </section>
     );
 }

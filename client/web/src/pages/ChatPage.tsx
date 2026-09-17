@@ -10,16 +10,12 @@ import type {
     ChatMessage as ChatMessageType,
 } from "@/features/chat/chat.types";
 
+import "./ChatPage.css";
+
 function ChatPage() {
-    const [messages, setMessages] = useState<
-        ChatMessageType[]
-    >([]);
-
-    const [isLoading, setIsLoading] =
-        useState(false);
-
-    const [error, setError] =
-        useState<string | null>(null);
+    const [messages, setMessages] = useState<ChatMessageType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     async function handleSubmit(query: string) {
         setError(null);
@@ -38,11 +34,10 @@ function ChatPage() {
         setIsLoading(true);
 
         try {
-            const response =
-                await askQuestion({
-                    query,
-                    topK: 5,
-                });
+            const response = await askQuestion({
+                query,
+                topK: 5,
+            });
 
             const assistantMessage: ChatMessageType = {
                 id: crypto.randomUUID(),
@@ -68,17 +63,30 @@ function ChatPage() {
         <main className="page chat-page">
             <header className="page-header">
                 <h1>Chat</h1>
+
                 <p>
                     Ask questions about your accessible documents.
                 </p>
             </header>
 
-            <section className="chat-messages">
+            <ChatInput
+                onSubmit={handleSubmit}
+                disabled={isLoading}
+            />
+
+            <section
+                className="chat-messages"
+                aria-live="polite"
+            >
                 {messages.length === 0 ? (
-                    <p>
-                        Ask a question to get
-                        started.
-                    </p>
+                    <div className="chat-empty">
+                        <h2>Ask a question</h2>
+
+                        <p>
+                            Ask about your accessible documents
+                            to get started.
+                        </p>
+                    </div>
                 ) : (
                     messages.map((message) => (
                         <ChatMessage
@@ -89,20 +97,22 @@ function ChatPage() {
                 )}
 
                 {isLoading && (
-                    <p>Assistant is thinking...</p>
+                    <div className="chat-thinking">
+                        <span>
+                            Assistant is thinking...
+                        </span>
+                    </div>
                 )}
 
                 {error && (
-                    <p role="alert">
+                    <div
+                        className="chat-error"
+                        role="alert"
+                    >
                         {error}
-                    </p>
+                    </div>
                 )}
             </section>
-
-            <ChatInput
-                onSubmit={handleSubmit}
-                disabled={isLoading}
-            />
         </main>
     );
 }

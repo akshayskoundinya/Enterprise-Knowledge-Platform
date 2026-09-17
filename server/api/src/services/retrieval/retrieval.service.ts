@@ -51,10 +51,32 @@ export async function generate(
                 document._id.toString()
         );
 
-    return generateAnswer({
+    const result = await generateAnswer({
         query: input.query,
         userId: input.userId,
         allowedDocumentIds,
         topK: input.topK,
     });
+
+    const documentNames = new Map(
+        accessibleDocuments.map(
+            (document) => [
+                document._id.toString(),
+                document.name,
+            ]
+        )
+    );
+
+    return {
+        ...result,
+        sources: result.sources.map(
+            (source) => ({
+                ...source,
+                document_name:
+                    documentNames.get(
+                        source.document_id
+                    ) ?? "Unknown document",
+            })
+        ),
+    };
 }

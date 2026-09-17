@@ -12,17 +12,12 @@ import {
 } from "@/features/documents/document.api";
 import type { Document } from "@/features/documents/document.types";
 
+import "./DocumentsPage.css";
+
 function DocumentsPage() {
-    const [documents, setDocuments] = useState<Document[]>(
-        [],
-    );
-
-    const [isLoading, setIsLoading] =
-        useState(true);
-
-    const [error, setError] = useState<string | null>(
-        null,
-    );
+    const [documents, setDocuments] = useState<Document[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     const [downloadingDocumentId, setDownloadingDocumentId] =
         useState<string | null>(null);
@@ -40,21 +35,16 @@ function DocumentsPage() {
         ]);
     }
 
-    async function handleDownload(
-        document: Document,
-    ) {
+    async function handleDownload(document: Document) {
         setActionError(null);
         setDownloadingDocumentId(document.id);
 
         try {
-            const file =
-                await downloadDocument(document.id);
+            const file = await downloadDocument(document.id);
 
-            const url =
-                URL.createObjectURL(file);
+            const url = URL.createObjectURL(file);
 
-            const link =
-                window.document.createElement("a");
+            const link = window.document.createElement("a");
 
             link.href = url;
             link.download = document.originalName;
@@ -71,9 +61,7 @@ function DocumentsPage() {
         }
     }
 
-    async function handleDelete(
-        document: Document,
-    ) {
+    async function handleDelete(document: Document) {
         const confirmed = window.confirm(
             `Are you sure you want to delete "${document.originalName}"?`,
         );
@@ -91,8 +79,7 @@ function DocumentsPage() {
             setDocuments((currentDocuments) =>
                 currentDocuments.filter(
                     (currentDocument) =>
-                        currentDocument.id !==
-                        document.id,
+                        currentDocument.id !== document.id,
                 ),
             );
         } catch {
@@ -111,9 +98,7 @@ function DocumentsPage() {
 
                 setDocuments(result);
             } catch {
-                setError(
-                    "Unable to load documents.",
-                );
+                setError("Unable to load documents.");
             } finally {
                 setIsLoading(false);
             }
@@ -123,52 +108,81 @@ function DocumentsPage() {
     }, []);
 
     if (isLoading) {
-        return <h1>Loading documents...</h1>;
+        return (
+            <main className="page documents-page">
+                <header className="page-header">
+                    <h1>Documents</h1>
+                    <p>Manage your knowledge documents.</p>
+                </header>
+
+                <div className="documents-state">
+                    <p>Loading documents...</p>
+                </div>
+            </main>
+        );
     }
 
     if (error) {
         return (
-            <main>
-                <h1>Documents</h1>
-                <p>{error}</p>
+            <main className="page documents-page">
+                <header className="page-header">
+                    <h1>Documents</h1>
+                    <p>Manage your knowledge documents.</p>
+                </header>
+
+                <div className="documents-state documents-state--error">
+                    <h2>Unable to load documents</h2>
+                    <p>{error}</p>
+                </div>
             </main>
         );
     }
 
     return (
-        <main>
-            <header>
+        <main className="page documents-page">
+            <header className="page-header">
                 <h1>Documents</h1>
-                <p>
-                    Manage your knowledge documents.
-                </p>
+                <p>Manage your knowledge documents.</p>
             </header>
 
-            <DocumentUpload
-                onUploaded={handleUploaded}
-            />
+            <section className="documents-upload">
+                <DocumentUpload
+                    onUploaded={handleUploaded}
+                />
+            </section>
 
             {actionError && (
-                <p role="alert">
+                <div
+                    className="documents-action-error"
+                    role="alert"
+                >
                     {actionError}
-                </p>
+                </div>
             )}
 
-            {documents.length === 0 ? (
-                <p>No documents available.</p>
-            ) : (
-                <DocumentTable
-                    documents={documents}
-                    onDownload={handleDownload}
-                    onDelete={handleDelete}
-                    downloadingDocumentId={
-                        downloadingDocumentId
-                    }
-                    deletingDocumentId={
-                        deletingDocumentId
-                    }
-                />
-            )}
+            <section className="documents-list">
+                {documents.length === 0 ? (
+                    <div className="documents-state">
+                        <h2>No documents yet</h2>
+                        <p>
+                            Upload a document to start building
+                            your knowledge base.
+                        </p>
+                    </div>
+                ) : (
+                    <DocumentTable
+                        documents={documents}
+                        onDownload={handleDownload}
+                        onDelete={handleDelete}
+                        downloadingDocumentId={
+                            downloadingDocumentId
+                        }
+                        deletingDocumentId={
+                            deletingDocumentId
+                        }
+                    />
+                )}
+            </section>
         </main>
     );
 }

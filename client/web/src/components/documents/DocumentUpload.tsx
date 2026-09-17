@@ -45,21 +45,42 @@ function DocumentUpload({
     }
 
     return (
-        <section>
-            <h2>Upload Document</h2>
+        <section className="document-upload card">
+            <div className="document-upload__content">
+                <div>
+                    <h2>Upload Document</h2>
 
-            <input
-                type="file"
-                onChange={handleFileChange}
-                disabled={isUploading}
-            />
+                    <p>
+                        Add a document to your knowledge
+                        base.
+                    </p>
+                </div>
 
-            {isUploading && (
-                <p>Uploading document...</p>
-            )}
+                <label
+                    className={`document-upload__button button button--primary${isUploading
+                            ? " document-upload__button--disabled"
+                            : ""
+                        }`}
+                >
+                    {isUploading
+                        ? "Uploading..."
+                        : "Choose File"}
+
+                    <input
+                        type="file"
+                        onChange={handleFileChange}
+                        disabled={isUploading}
+                    />
+                </label>
+            </div>
 
             {error && (
-                <p role="alert">{error}</p>
+                <p
+                    className="document-upload__error"
+                    role="alert"
+                >
+                    {error}
+                </p>
             )}
         </section>
     );

@@ -1,7 +1,14 @@
 import { useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import {
+    NavLink,
+    Outlet,
+    useNavigate,
+} from "react-router-dom";
 
 import { useAuth } from "@/features/auth/useAuth";
+// import ThemeToggle from "@/components/theme/ThemeToggle";
+
+import "./AppLayout.css";
 
 function AppLayout() {
     const navigate = useNavigate();
@@ -39,6 +46,7 @@ function AppLayout() {
                 <div className="app-sidebar__top">
                     <div className="app-sidebar__brand">
                         <h2>EKP</h2>
+
                         <span>
                             Enterprise Knowledge Platform
                         </span>
@@ -122,6 +130,8 @@ function AppLayout() {
                     <Outlet />
                 </main>
             </div>
+
+            {/* <ThemeToggle /> */}
         </div>
     );
 }

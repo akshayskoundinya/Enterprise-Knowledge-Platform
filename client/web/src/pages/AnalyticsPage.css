@@ -1,0 +1,238 @@
+.analytics-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+}
+
+.analytics-grid>.card {
+    padding: 20px;
+}
+
+.analytics-section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.analytics-section-header h2 {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1.125rem;
+}
+
+.analytics-section-header p {
+    margin: 0.35rem 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+}
+
+.analytics-status-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.analytics-status-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.analytics-status-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--color-text);
+    font-size: 0.875rem;
+}
+
+.analytics-status {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.analytics-status--uploaded {
+    color: var(--color-text-secondary);
+    background: #f3f4f6;
+}
+
+.analytics-status--processing {
+    color: var(--color-warning);
+    background: #fef3c7;
+}
+
+.analytics-status--ready {
+    color: var(--color-success);
+    background: #dcfce7;
+}
+
+.analytics-status--failed {
+    color: var(--color-danger);
+    background: #fee2e2;
+}
+
+.analytics-progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #f3f4f6;
+}
+
+.analytics-progress-bar {
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.25s ease;
+}
+
+.analytics-progress-bar--uploaded {
+    background: #9ca3af;
+}
+
+.analytics-progress-bar--processing {
+    background: #f59e0b;
+}
+
+.analytics-progress-bar--ready {
+    background: #22c55e;
+}
+
+.analytics-progress-bar--failed {
+    background: #ef4444;
+}
+
+.analytics-file-types {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+}
+
+.analytics-file-row {
+    display: grid;
+    grid-template-columns: 70px minmax(0, 1fr) 35px;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.analytics-file-name {
+    color: var(--color-text);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.analytics-file-bar-container {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: #f3f4f6;
+}
+
+.analytics-file-bar {
+    height: 100%;
+    border-radius: inherit;
+    background: var(--color-primary);
+}
+
+.analytics-file-count {
+    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    text-align: right;
+}
+
+.analytics-ai-section {
+    margin-bottom: 1.25rem;
+    padding: 20px;
+}
+
+.analytics-coming-soon {
+    flex-shrink: 0;
+    padding: 0.3rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--color-text-secondary);
+    background: #f9fafb;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.analytics-ai-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.analytics-metric-placeholder {
+    padding: 1rem;
+    border: 1px dashed var(--color-border-dark);
+    border-radius: var(--radius-md);
+    background: #fafafa;
+}
+
+.analytics-metric-placeholder h3 {
+    margin: 0 0 0.35rem;
+    color: var(--color-text);
+    font-size: 0.95rem;
+}
+
+.analytics-metric-placeholder p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+.analytics-loading,
+.analytics-error {
+    color: var(--color-text-secondary);
+}
+
+.analytics-error {
+    color: var(--color-danger);
+}
+
+.analytics-empty {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 900px) {
+    .analytics-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .analytics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-ai-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .analytics-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-ai-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .analytics-section-header {
+        flex-direction: column;
+    }
+
+    .analytics-stat-card,
+    .analytics-grid>.card,
+    .analytics-ai-section {
+        padding: 16px;
+    }
+}

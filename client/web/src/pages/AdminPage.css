@@ -1,0 +1,323 @@
+.admin-page {
+    max-width: 1400px;
+}
+
+.admin-tabs {
+    display: inline-flex;
+    gap: 4px;
+    margin-bottom: 24px;
+    padding: 4px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.admin-tab {
+    min-width: 100px;
+    padding: 9px 18px;
+    border: 0;
+    border-radius: calc(var(--radius-md) - 2px);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.admin-tab:hover {
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.admin-tab--active {
+    background: #eff6ff;
+    color: var(--color-primary);
+}
+
+.admin-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+}
+
+.admin-section__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.admin-section__header h2 {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.3;
+}
+
+.admin-section__header p {
+    margin: 5px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.admin-table th {
+    padding: 13px 20px;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    line-height: 1.4;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.admin-table td {
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-size: 14px;
+    line-height: 1.4;
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.admin-table tbody tr {
+    transition: background-color 0.15s ease;
+}
+
+.admin-table tbody tr:hover {
+    background: #fafafa;
+}
+
+.admin-table td:first-child {
+    font-weight: 600;
+}
+
+.admin-table__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.admin-empty {
+    margin: 0;
+    padding: 48px 24px;
+    color: var(--color-text-secondary);
+    text-align: center;
+}
+
+.admin-alert {
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border: 1px solid #fecaca;
+    border-radius: var(--radius-md);
+    background: #fef2f2;
+    color: var(--color-danger);
+    font-size: 14px;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.admin-form__error {
+    margin: 0;
+    color: var(--color-danger);
+    font-size: 13px;
+}
+
+.admin-form__hint {
+    margin: -4px 0 0;
+    color: var(--color-text-secondary);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.admin-form__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.permission-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.permission-selector h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.permission-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 16px;
+    margin: 0;
+    padding: 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-background);
+}
+
+.permission-group legend {
+    grid-column: 1 / -1;
+    padding: 0 6px;
+    color: var(--color-text);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.permission-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 32px;
+    color: var(--color-text);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.permission-item input {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--color-primary);
+    cursor: pointer;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgb(17 24 39 / 45%);
+}
+
+.modal {
+    width: min(100%, 560px);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    box-shadow: var(--shadow-md);
+}
+
+.modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal__header h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+}
+
+.modal__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.modal__close:hover {
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+.modal__body {
+    padding: 20px;
+}
+
+@media (max-width: 768px) {
+    .admin-section {
+        padding: 16px;
+    }
+
+    .admin-section__header {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .admin-section__header .button {
+        width: 100%;
+    }
+
+    .admin-tabs {
+        display: flex;
+        width: 100%;
+    }
+
+    .admin-tab {
+        flex: 1;
+    }
+
+    .permission-group {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-backdrop {
+        align-items: flex-start;
+        padding: 16px;
+    }
+
+    .modal {
+        max-height: calc(100vh - 32px);
+    }
+
+    .modal__body {
+        padding: 16px;
+    }
+}

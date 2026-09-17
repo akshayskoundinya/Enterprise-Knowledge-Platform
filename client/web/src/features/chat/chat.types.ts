@@ -6,6 +6,7 @@ export interface ChatRequest {
 export interface ChatSource {
     chunk_id: string;
     document_id: string;
+    document_name: string;
     page: number | null;
 }
 
