@@ -63,7 +63,6 @@ function ChatPage() {
         <main className="page chat-page">
             <header className="page-header">
                 <h1>Chat</h1>
-
                 <p>
                     Ask questions about your accessible documents.
                 </p>
@@ -76,12 +75,11 @@ function ChatPage() {
 
             <section
                 className="chat-messages"
-                aria-live="polite"
+                aria-label="Conversation"
             >
                 {messages.length === 0 ? (
                     <div className="chat-empty">
                         <h2>Ask a question</h2>
-
                         <p>
                             Ask about your accessible documents
                             to get started.
@@ -96,13 +94,14 @@ function ChatPage() {
                     ))
                 )}
 
-                {isLoading && (
-                    <div className="chat-thinking">
-                        <span>
-                            Assistant is thinking...
-                        </span>
-                    </div>
-                )}
+                <div
+                    className="chat-status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                >
+                    {isLoading &&
+                        "Assistant is thinking..."}
+                </div>
 
                 {error && (
                     <div

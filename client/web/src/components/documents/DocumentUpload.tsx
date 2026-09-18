@@ -45,12 +45,17 @@ function DocumentUpload({
     }
 
     return (
-        <section className="document-upload card">
+        <section
+            className="document-upload card"
+            aria-labelledby="document-upload-title"
+        >
             <div className="document-upload__content">
                 <div>
-                    <h2>Upload Document</h2>
+                    <h2 id="document-upload-title">
+                        Upload Document
+                    </h2>
 
-                    <p>
+                    <p id="document-upload-description">
                         Add a document to your knowledge
                         base.
                     </p>
@@ -70,12 +75,26 @@ function DocumentUpload({
                         type="file"
                         onChange={handleFileChange}
                         disabled={isUploading}
+                        aria-describedby={
+                            error
+                                ? "document-upload-error"
+                                : "document-upload-description"
+                        }
                     />
                 </label>
             </div>
 
+            <div
+                className="document-upload__status"
+                aria-live="polite"
+                aria-atomic="true"
+            >
+                {isUploading && "Uploading document..."}
+            </div>
+
             {error && (
                 <p
+                    id="document-upload-error"
                     className="document-upload__error"
                     role="alert"
                 >

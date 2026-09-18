@@ -40,7 +40,11 @@ function DashboardPage() {
                     <p>Your knowledge platform overview.</p>
                 </header>
 
-                <div className="dashboard-state">
+                <div
+                    className="dashboard-state"
+                    role="status"
+                    aria-live="polite"
+                >
                     <p>Loading dashboard...</p>
                 </div>
             </main>
@@ -55,7 +59,10 @@ function DashboardPage() {
                     <p>Your knowledge platform overview.</p>
                 </header>
 
-                <div className="dashboard-state dashboard-state--error">
+                <div
+                    className="dashboard-state dashboard-state--error"
+                    role="alert"
+                >
                     <h2>Unable to load dashboard</h2>
                     <p>{error}</p>
                 </div>
@@ -72,7 +79,10 @@ function DashboardPage() {
                 <p>Your knowledge platform overview.</p>
             </header>
 
-            <section className="dashboard-stats">
+            <section
+                className="dashboard-stats"
+                aria-label="Document statistics"
+            >
                 <DashboardStatCard
                     label="Total Documents"
                     value={metrics.total}
@@ -94,7 +104,10 @@ function DashboardPage() {
                 />
             </section>
 
-            <section className="dashboard-section">
+            <section
+                className="dashboard-section"
+                aria-label="Recent documents"
+            >
                 <RecentDocuments documents={documents} />
             </section>
         </main>

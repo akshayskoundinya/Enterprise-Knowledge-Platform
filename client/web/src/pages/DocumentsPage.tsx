@@ -115,7 +115,11 @@ function DocumentsPage() {
                     <p>Manage your knowledge documents.</p>
                 </header>
 
-                <div className="documents-state">
+                <div
+                    className="documents-state"
+                    role="status"
+                    aria-live="polite"
+                >
                     <p>Loading documents...</p>
                 </div>
             </main>
@@ -130,7 +134,10 @@ function DocumentsPage() {
                     <p>Manage your knowledge documents.</p>
                 </header>
 
-                <div className="documents-state documents-state--error">
+                <div
+                    className="documents-state documents-state--error"
+                    role="alert"
+                >
                     <h2>Unable to load documents</h2>
                     <p>{error}</p>
                 </div>
@@ -145,7 +152,10 @@ function DocumentsPage() {
                 <p>Manage your knowledge documents.</p>
             </header>
 
-            <section className="documents-upload">
+            <section
+                className="documents-upload"
+                aria-labelledby="documents-upload-title"
+            >
                 <DocumentUpload
                     onUploaded={handleUploaded}
                 />
@@ -160,7 +170,17 @@ function DocumentsPage() {
                 </div>
             )}
 
-            <section className="documents-list">
+            <section
+                className="documents-list"
+                aria-labelledby="documents-list-title"
+            >
+                <h2
+                    id="documents-list-title"
+                    className="visually-hidden"
+                >
+                    Your documents
+                </h2>
+
                 {documents.length === 0 ? (
                     <div className="documents-state">
                         <h2>No documents yet</h2>

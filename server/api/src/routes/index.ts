@@ -11,13 +11,20 @@ import retrievalRoutes from "./retrieval.routes";
 const router = Router();
 
 router.use("/health", healthRoutes);
-router.use("/auth", authRoutes);
-router.use("/users", userRoutes);
-router.use("/roles", roleRoutes);
-router.use("/documents", documentRoutes);
+
+router.use("/api/auth", authRoutes);
+
+router.use("/api/users", userRoutes);
+
+router.use("/api/roles", roleRoutes);
+
+router.use("/api/documents", documentRoutes);
+
 router.use(
     "/internal/v1/documents",
-    internalDocumentRoutes
+    internalDocumentRoutes,
 );
-router.use("/retrieval", retrievalRoutes);
+
+router.use("/api/retrieval", retrievalRoutes);
+
 export default router;

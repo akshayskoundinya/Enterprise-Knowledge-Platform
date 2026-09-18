@@ -85,7 +85,10 @@ function AnalyticsPage() {
             total: documents.length,
             statusCounts,
             fileTypes: [...fileTypeCounts.entries()]
-                .sort(([, countA], [, countB]) => countB - countA),
+                .sort(
+                    ([, countA], [, countB]) =>
+                        countB - countA,
+                ),
         };
     }, [documents]);
 
@@ -99,7 +102,11 @@ function AnalyticsPage() {
                     </p>
                 </header>
 
-                <section className="card analytics-loading">
+                <section
+                    className="card analytics-loading"
+                    role="status"
+                    aria-live="polite"
+                >
                     Loading analytics...
                 </section>
             </main>
@@ -135,7 +142,10 @@ function AnalyticsPage() {
                 </p>
             </header>
 
-            <section className="analytics-grid">
+            <section
+                className="analytics-grid"
+                aria-label="Document analytics"
+            >
                 <div className="card">
                     <div className="analytics-section-header">
                         <div>
@@ -149,40 +159,66 @@ function AnalyticsPage() {
 
                     <div className="analytics-status-list">
                         {(Object.keys(STATUS_LABELS) as DocumentStatus[])
-                            .map((status) => (
-                                <div
-                                    className="analytics-status-row"
-                                    key={status}
-                                >
-                                    <div className="analytics-status-info">
-                                        <span
-                                            className={
-                                                STATUS_CLASSES[status]
-                                            }
-                                        >
-                                            {STATUS_LABELS[status]}
-                                        </span>
+                            .map((status) => {
+                                const percentage =
+                                    getPercentage(
+                                        statistics.statusCounts[
+                                        status
+                                        ],
+                                        statistics.total,
+                                    );
 
-                                        <span>
-                                            {statistics.statusCounts[status]}
-                                        </span>
-                                    </div>
-
-                                    <div className="analytics-progress">
-                                        <div
-                                            className={`analytics-progress-bar analytics-progress-bar--${status.toLowerCase()}`}
-                                            style={{
-                                                width: `${getPercentage(
-                                                    statistics.statusCounts[
+                                return (
+                                    <div
+                                        className="analytics-status-row"
+                                        key={status}
+                                    >
+                                        <div className="analytics-status-info">
+                                            <span
+                                                className={
+                                                    STATUS_CLASSES[
                                                     status
-                                                    ],
-                                                    statistics.total,
-                                                )}%`,
-                                            }}
-                                        />
+                                                    ]
+                                                }
+                                            >
+                                                {
+                                                    STATUS_LABELS[
+                                                    status
+                                                    ]
+                                                }
+                                            </span>
+
+                                            <span>
+                                                {
+                                                    statistics
+                                                        .statusCounts[
+                                                    status
+                                                    ]
+                                                }
+                                            </span>
+                                        </div>
+
+                                        <div
+                                            className="analytics-progress"
+                                            role="progressbar"
+                                            aria-label={`${STATUS_LABELS[status]} documents`}
+                                            aria-valuemin={0}
+                                            aria-valuemax={100}
+                                            aria-valuenow={
+                                                percentage
+                                            }
+                                            aria-valuetext={`${percentage}%`}
+                                        >
+                                            <div
+                                                className={`analytics-progress-bar analytics-progress-bar--${status.toLowerCase()}`}
+                                                style={{
+                                                    width: `${percentage}%`,
+                                                }}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                     </div>
                 </div>
 
@@ -204,42 +240,62 @@ function AnalyticsPage() {
                     ) : (
                         <div className="analytics-file-types">
                             {statistics.fileTypes.map(
-                                ([extension, count]) => (
-                                    <div
-                                        className="analytics-file-row"
-                                        key={extension}
-                                    >
-                                        <span className="analytics-file-name">
-                                            {extension}
-                                        </span>
+                                ([extension, count]) => {
+                                    const percentage =
+                                        getPercentage(
+                                            count,
+                                            statistics.total,
+                                        );
 
-                                        <div className="analytics-file-bar-container">
+                                    return (
+                                        <div
+                                            className="analytics-file-row"
+                                            key={extension}
+                                        >
+                                            <span className="analytics-file-name">
+                                                {extension}
+                                            </span>
+
                                             <div
-                                                className="analytics-file-bar"
-                                                style={{
-                                                    width: `${getPercentage(
-                                                        count,
-                                                        statistics.total,
-                                                    )}%`,
-                                                }}
-                                            />
-                                        </div>
+                                                className="analytics-file-bar-container"
+                                                role="progressbar"
+                                                aria-label={`${extension} documents`}
+                                                aria-valuemin={0}
+                                                aria-valuemax={100}
+                                                aria-valuenow={
+                                                    percentage
+                                                }
+                                                aria-valuetext={`${percentage}%`}
+                                            >
+                                                <div
+                                                    className="analytics-file-bar"
+                                                    style={{
+                                                        width: `${percentage}%`,
+                                                    }}
+                                                />
+                                            </div>
 
-                                        <span className="analytics-file-count">
-                                            {count}
-                                        </span>
-                                    </div>
-                                ),
+                                            <span className="analytics-file-count">
+                                                {count}
+                                            </span>
+                                        </div>
+                                    );
+                                },
                             )}
                         </div>
                     )}
                 </div>
             </section>
 
-            <section className="card analytics-ai-section">
+            <section
+                className="card analytics-ai-section"
+                aria-labelledby="analytics-ai-title"
+            >
                 <div className="analytics-section-header">
                     <div>
-                        <h2>AI analytics</h2>
+                        <h2 id="analytics-ai-title">
+                            AI analytics
+                        </h2>
                         <p>
                             Retrieval and generation metrics will
                             appear here when exposed by the analytics

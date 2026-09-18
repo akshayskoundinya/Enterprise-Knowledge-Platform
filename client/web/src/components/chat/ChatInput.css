@@ -1,16 +1,16 @@
 .chat-input {
+    width: 100%;
+
     display: flex;
     align-items: stretch;
     gap: 10px;
-
-    width: 100%;
 }
 
 .chat-input input {
     flex: 1;
     min-width: 0;
-
     height: 42px;
+
     padding: 9px 12px;
 
     color: var(--color-text);
@@ -22,9 +22,10 @@
     outline: none;
 
     transition:
+        background-color 0.15s ease,
         border-color 0.15s ease,
         box-shadow 0.15s ease,
-        background-color 0.15s ease;
+        color 0.15s ease;
 }
 
 .chat-input input::placeholder {
@@ -33,6 +34,7 @@
 
 .chat-input input:focus {
     border-color: var(--color-primary);
+
     box-shadow: 0 0 0 3px rgb(37 99 235 / 0.12);
 }
 
@@ -42,7 +44,6 @@
 
 .chat-input button {
     flex-shrink: 0;
-
     min-width: 72px;
 }
 

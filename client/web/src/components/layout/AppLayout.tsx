@@ -38,15 +38,16 @@ function AppLayout() {
             )}
 
             <aside
+                id="app-navigation"
                 className={`app-sidebar ${isSidebarOpen
-                    ? "app-sidebar--open"
-                    : ""
+                        ? "app-sidebar--open"
+                        : ""
                     }`}
+                aria-label="Main navigation"
             >
                 <div className="app-sidebar__top">
                     <div className="app-sidebar__brand">
                         <h2>EKP</h2>
-
                         <span>
                             Enterprise Knowledge Platform
                         </span>
@@ -62,7 +63,10 @@ function AppLayout() {
                     </button>
                 </div>
 
-                <nav className="app-sidebar__nav">
+                <nav
+                    className="app-sidebar__nav"
+                    aria-label="Primary"
+                >
                     <NavLink
                         to="/dashboard"
                         onClick={closeSidebar}
@@ -114,6 +118,8 @@ function AppLayout() {
                         type="button"
                         className="menu-button"
                         aria-label="Open navigation"
+                        aria-expanded={isSidebarOpen}
+                        aria-controls="app-navigation"
                         onClick={() =>
                             setIsSidebarOpen(true)
                         }

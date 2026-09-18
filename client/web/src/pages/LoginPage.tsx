@@ -72,9 +72,14 @@ function LoginPage() {
                     </p>
                 </div>
 
-                <section className="login-card">
+                <section
+                    className="login-card"
+                    aria-labelledby="login-title"
+                >
                     <div className="login-card__header">
-                        <h1>Welcome back</h1>
+                        <h1 id="login-title">
+                            Welcome back
+                        </h1>
 
                         <p>
                             Sign in to access your
@@ -85,6 +90,11 @@ function LoginPage() {
                     <form
                         className="login-form"
                         onSubmit={handleSubmit}
+                        aria-describedby={
+                            error
+                                ? "login-error"
+                                : undefined
+                        }
                     >
                         <div className="login-field">
                             <label htmlFor="email">
@@ -103,6 +113,7 @@ function LoginPage() {
                                 placeholder="you@company.com"
                                 autoComplete="email"
                                 required
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -123,11 +134,13 @@ function LoginPage() {
                                 placeholder="Enter your password"
                                 autoComplete="current-password"
                                 required
+                                disabled={isLoading}
                             />
                         </div>
 
                         {error && (
                             <p
+                                id="login-error"
                                 className="login-error"
                                 role="alert"
                             >
@@ -139,6 +152,7 @@ function LoginPage() {
                             className="login-submit"
                             type="submit"
                             disabled={isLoading}
+                            aria-busy={isLoading}
                         >
                             {isLoading
                                 ? "Signing in..."

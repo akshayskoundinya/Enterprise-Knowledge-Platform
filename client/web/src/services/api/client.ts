@@ -6,7 +6,7 @@ import {
 } from "@/features/auth/auth.storage";
 
 export const apiClient = axios.create({
-    baseURL: "/",
+    baseURL: "/api",
 });
 
 apiClient.interceptors.request.use((config) => {
@@ -27,7 +27,10 @@ apiClient.interceptors.response.use(
             if (error.response?.status === 401) {
                 clearTokens();
 
-                if (window.location.pathname !== "/login") {
+                if (
+                    window.location.pathname !==
+                    "/login"
+                ) {
                     window.location.assign("/login");
                 }
             }

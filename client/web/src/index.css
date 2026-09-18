@@ -84,10 +84,6 @@ body {
 
     color: var(--color-text);
     background: var(--color-background);
-
-    transition:
-        color 0.2s ease,
-        background-color 0.2s ease;
 }
 
 button,
@@ -130,6 +126,11 @@ h2 {
 h3 {
     font-size: 1rem;
     line-height: 1.4;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .page {
@@ -284,4 +285,21 @@ h3 {
 .status-badge--failed {
     color: var(--color-danger);
     background: var(--color-danger-surface);
+}
+
+.visually-hidden {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+    border: 0;
 }

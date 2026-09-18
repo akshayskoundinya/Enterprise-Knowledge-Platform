@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import type { SubmitEvent } from "react";
 
@@ -89,28 +90,6 @@ function AdminPage() {
     const [editingRole, setEditingRole] =
         useState<AdminRole | null>(null);
 
-    // async function loadAdminData() {
-    //     setIsLoading(true);
-    //     setError(null);
-
-    //     try {
-    //         const [usersData, rolesData] =
-    //             await Promise.all([
-    //                 getUsers(),
-    //                 getRoles(),
-    //             ]);
-
-    //         setUsers(usersData);
-    //         setRoles(rolesData);
-    //     } catch {
-    //         setError(
-    //             "Unable to load administration data.",
-    //         );
-    //     } finally {
-    //         setIsLoading(false);
-    //     }
-    // }
-
     useEffect(() => {
         async function load() {
             try {
@@ -124,8 +103,19 @@ function AdminPage() {
 
                 setUsers(usersData);
                 setRoles(rolesData);
-            } catch {
-                setError("Unable to load admin data.");
+            } catch (error) {
+                if (
+                    axios.isAxiosError(error) &&
+                    error.response?.status === 403
+                ) {
+                    setError(
+                        "Access restricted. You do not have permission to access administration.",
+                    );
+                } else {
+                    setError(
+                        "Unable to load administration data.",
+                    );
+                }
             } finally {
                 setIsLoading(false);
             }
